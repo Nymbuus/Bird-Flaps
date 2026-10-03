@@ -14,11 +14,14 @@ public:
 	Rectangle getUpperCollisionRect() const;
 	Rectangle getLowerCollisionRect(int windowHeight) const;
 
-	bool isOffScreen();
+	bool isOffScreen() const;
+	bool hasBeenPassed() const;
+	void markAsPassed();
 
 private:
 	Vector2 position;
 	float gapPosition;
+	bool passed;
 
 	static constexpr float Gap = 200.0f;
 	static constexpr int gapBorderOffset = 50;

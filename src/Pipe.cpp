@@ -3,7 +3,8 @@
 
 Pipe::Pipe()
 	: position{0.0f, 0.0f},
-	  gapPosition{0.0f}
+	  gapPosition{0.0f},
+	  passed{false}
 {
 }
 
@@ -57,10 +58,17 @@ Rectangle Pipe::getLowerCollisionRect(int windowHeight) const
 	};
 }
 
-bool Pipe::isOffScreen()
+bool Pipe::isOffScreen() const
 {
-	if (position.x <= -Width)
-		return true;
-	else
-		return false;
+	return position.x <= -Width;
+}
+
+bool Pipe::hasBeenPassed() const
+{
+	return passed;
+}
+
+void Pipe::markAsPassed()
+{
+	passed = true;
 }

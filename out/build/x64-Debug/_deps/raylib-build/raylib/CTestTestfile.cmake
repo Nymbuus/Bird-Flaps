@@ -1,6 +1,6 @@
 # CMake generated Testfile for 
-# Source directory: C:/GameDevC++/BirdFlaps/out/build/x64-Debug/_deps/raylib-src/src
-# Build directory: C:/GameDevC++/BirdFlaps/out/build/x64-Debug/_deps/raylib-build/raylib
+# Source directory: C:/GameDevC++/Bird-Flaps/Bird-Flaps/out/build/x64-Debug/_deps/raylib-src/src
+# Build directory: C:/GameDevC++/Bird-Flaps/Bird-Flaps/out/build/x64-Debug/_deps/raylib-build/raylib
 # 
 # This file includes the relevant testing commands required for 
 # testing this directory and lists subdirectories to be tested as well.

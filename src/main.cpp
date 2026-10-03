@@ -8,3 +8,5 @@ int main()
 
 	return 0;
 }
+
+// Kolla chatGPT vad som sades sist!!

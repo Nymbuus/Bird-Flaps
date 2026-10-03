@@ -29,7 +29,7 @@ FetchContent_MakeAvailable(raylib)
 
 add_executable(BirdFlaps
     src/main.cpp
- "src/Game.cpp" "src/Game.h" "src/Player.cpp" "src/Pipe.cpp")
+ "src/Game.cpp" "src/Game.h" "src/Player.cpp" "src/Pipe.cpp" "src/ Score.cpp" "src/ Score.h")
 
 # Link Raylib to our program
 target_link_libraries(BirdFlaps PRIVATE raylib)

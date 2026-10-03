@@ -4,13 +4,16 @@
 
 Game::Game()
 	: gameState{GameState::Playing},
-	  pipeSpawner{0.0f}
+	  pipeSpawner{0.0f},
+	  playerPosX{player.getCollisionRect().x}
 {
 	InitWindow(width, height, "Bird Flaps");
 	SetTargetFPS(60);
 
 	pipes.emplace_back();
 	pipes.back().init(width, height);
+
+	score.init(width);
 }
 
 void Game::run()
@@ -37,6 +40,7 @@ void Game::processInput()
 			pipes.emplace_back();
 			pipes.back().init(width, height);
 			pipeSpawner = 0.0f;
+			score.reset();
 
 			gameState = GameState::Playing;
 		}
@@ -53,33 +57,11 @@ void Game::update()
 	if (gameState != GameState::Playing)
 		return;
 
-	if (!pipes.empty())
-	{
-		if (pipes.front().isOffScreen())
-		{
-			pipes.erase(pipes.begin());
-		}
-	}
-
 	float deltaTime = GetFrameTime();
 
-	pipeSpawner += deltaTime;
-	if (pipeSpawner >= 1.3f)
-	{
-		pipes.emplace_back();
-		pipes.back().init(width, height);
-		pipeSpawner = 0.0f;
-	}
-
-	player.update(deltaTime, height);
-	for (Pipe& pipe : pipes)
-	{
-		pipe.update(deltaTime);
-	}
-
-	if (CheckCollisionRecs(player.getCollisionRect(), pipes.front().getUpperCollisionRect()) ||
-		CheckCollisionRecs(player.getCollisionRect(), pipes.front().getLowerCollisionRect(height)))
-		gameState = GameState::GameOver;
+	updatePlayer(deltaTime);
+	updatePipes(deltaTime);
+	checkPositionInteractions();
 }
 
 void Game::render()
@@ -88,19 +70,13 @@ void Game::render()
 
 	ClearBackground(RAYWHITE);
 
-	DrawText(
-		"Bird Flaps",
-		(GetScreenWidth() / 2) - 100,
-		10,
-		fontSize,
-		BLACK);
-
 	player.draw();
 	for (Pipe& pipe : pipes)
 	{
 		pipe.draw();
 	}
 
+	score.draw();
 
 	if (gameState == GameState::GameOver)
 	{
@@ -109,4 +85,49 @@ void Game::render()
 	}
 
 	EndDrawing();
+}
+
+void Game::updatePlayer(float deltaTime)
+{
+	player.update(deltaTime, height);
+	for (Pipe& pipe : pipes)
+	{
+		pipe.update(deltaTime);
+	}
+}
+
+void Game::updatePipes(float deltaTime)
+{
+	if (!pipes.empty())
+	{
+		if (pipes.front().isOffScreen())
+		{
+			pipes.erase(pipes.begin());
+		}
+	}
+
+	pipeSpawner += deltaTime;
+	if (pipeSpawner >= 1.3f)
+	{
+		pipes.emplace_back();
+		pipes.back().init(width, height);
+		pipeSpawner = 0.0f;
+	}
+}
+
+void Game::checkPositionInteractions()
+{
+	if (!pipes.empty())
+	{
+		if (CheckCollisionRecs(player.getCollisionRect(), pipes.front().getUpperCollisionRect()) ||
+			CheckCollisionRecs(player.getCollisionRect(), pipes.front().getLowerCollisionRect(height)))
+			gameState = GameState::GameOver;
+
+		if (playerPosX >= pipes.front().getUpperCollisionRect().x &&
+			!pipes.front().hasBeenPassed())
+		{
+			score.addPoint();
+			pipes.front().markAsPassed();
+		}
+	}
 }
