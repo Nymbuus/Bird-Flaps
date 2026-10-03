@@ -1,8 +1,8 @@
-if(NOT EXISTS "C:/GameDevC++/Bird-Flaps/Bird-Flaps/out/build/x64-Debug/install_manifest.txt")
-  message(FATAL_ERROR "Cannot find install manifest: C:/GameDevC++/Bird-Flaps/Bird-Flaps/out/build/x64-Debug/install_manifest.txt")
+if(NOT EXISTS "C:/GameDevC++/Bird-Flaps/out/build/x64-Debug/install_manifest.txt")
+  message(FATAL_ERROR "Cannot find install manifest: C:/GameDevC++/Bird-Flaps/out/build/x64-Debug/install_manifest.txt")
 endif()
 
-file(READ "C:/GameDevC++/Bird-Flaps/Bird-Flaps/out/build/x64-Debug/install_manifest.txt" files)
+file(READ "C:/GameDevC++/Bird-Flaps/out/build/x64-Debug/install_manifest.txt" files)
 string(REGEX REPLACE "\n" ";" files "${files}")
 foreach(file ${files})
   message(STATUS "Uninstalling $ENV{DESTDIR}${file}")

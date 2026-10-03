@@ -7,10 +7,8 @@
   },
   "ExpandedNodes": [
     "",
-    "\\out",
-    "\\out\\build",
     "\\src"
   ],
-  "SelectedNode": "\\src\\Pipe.h",
+  "SelectedNode": "\\CMakeLists.txt",
   "PreviewInSolutionExplorer": false
 }

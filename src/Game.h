@@ -2,7 +2,7 @@
 
 #include "Player.h"
 #include "Pipe.h"
-#include " Score.h"
+#include "Score.h"
 #include <vector>
 
 enum class GameState

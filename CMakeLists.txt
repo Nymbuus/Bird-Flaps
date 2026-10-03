@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 
-project(BirdFlaps LANGUAGES CXX)
+project(Bird-Flaps LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -27,9 +27,8 @@ FetchContent_MakeAvailable(raylib)
 # Our executable
 # --------------------------------------------------
 
-add_executable(BirdFlaps
-    src/main.cpp
- "src/Game.cpp" "src/Game.h" "src/Player.cpp" "src/Pipe.cpp" "src/ Score.cpp" "src/ Score.h")
+add_executable(Bird-Flaps
+    "src/main.cpp" "src/Game.cpp" "src/Game.h" "src/Player.cpp" "src/Pipe.cpp" "src/Score.cpp" "src/Score.h")
 
 # Link Raylib to our program
-target_link_libraries(BirdFlaps PRIVATE raylib)
+target_link_libraries(Bird-Flaps PRIVATE raylib)
