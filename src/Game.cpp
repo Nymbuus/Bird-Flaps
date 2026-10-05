@@ -10,9 +10,10 @@ Game::Game()
 	InitWindow(width, height, "Bird Flaps");
 	SetTargetFPS(60);
 
-	pipes.emplace_back();
+	player.init();
+	pipeTexture = LoadTexture("assets/pipe.png");
+	pipes.emplace_back(&pipeTexture);
 	pipes.back().init(width, height);
-
 	score.init(width);
 }
 
@@ -37,7 +38,7 @@ void Game::processInput()
 
 			player.reset();
 			pipes.clear();
-			pipes.emplace_back();
+			pipes.emplace_back(&pipeTexture);
 			pipes.back().init(width, height);
 			pipeSpawner = 0.0f;
 			score.reset();
@@ -80,8 +81,8 @@ void Game::render()
 
 	if (gameState == GameState::GameOver)
 	{
-		DrawText("FLAP OVER", (width / 2) - 100.0f, height / 2, fontSize, RED);
-		DrawText("PRESS SPACE TO RESTART", (width / 2) - 155.0f, (height / 2) + fontSize, fontSize - 10, BLACK);
+		DrawText("FLAP OVER", (width / 2) - 100, height / 2, fontSize, RED);
+		DrawText("PRESS SPACE TO RESTART", (width / 2) - 155, (height / 2) + fontSize, fontSize - 10, BLACK);
 	}
 
 	EndDrawing();
@@ -109,7 +110,7 @@ void Game::updatePipes(float deltaTime)
 	pipeSpawner += deltaTime;
 	if (pipeSpawner >= 1.3f)
 	{
-		pipes.emplace_back();
+		pipes.emplace_back(&pipeTexture);
 		pipes.back().init(width, height);
 		pipeSpawner = 0.0f;
 	}

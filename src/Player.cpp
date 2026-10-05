@@ -3,8 +3,14 @@
 
 Player::Player()
 	: position{InitPos},
-	  velocityY{0.0f}
+	  velocityY{InitVelY},
+	  texture{ }
 {
+}
+
+void Player::init()
+{
+	texture = LoadTexture("assets/bird.png");
 }
 
 void Player::update(float deltaTime, float windowHeight)
@@ -12,31 +18,32 @@ void Player::update(float deltaTime, float windowHeight)
 	velocityY += Gravity * deltaTime;
 	position.y += velocityY * deltaTime;
 
-	if (windowHeight - BirdRadius <= position.y)
+	if (windowHeight <= position.y + (texture.height / 2))
 	{
-		position.y = windowHeight - BirdRadius;
+		position.y = windowHeight - (texture.height / 2);
 		velocityY = 0.0f;
 	}
 
-	if (position.y <= BirdRadius)
+	if (position.y <= texture.height / 2)
 	{
-		position.y = BirdRadius;
+		position.y = texture.height / 2;
 		velocityY = 0.0f;
 	}
 }
 
 void Player::draw() const
 {
-	DrawCircle(
-		static_cast<int>(position.x),
-		static_cast<int>(position.y),
-		static_cast<int>(BirdRadius),
-		YELLOW);
+	DrawTexture(
+		texture,
+		static_cast<int>(position.x - (texture.width / 2)),
+		static_cast<int>(position.y - (texture.height / 2)),
+		WHITE);
 }
 
 void Player::reset()
 {
 	position = InitPos;
+	velocityY = InitVelY;
 }
 
 void Player::flap()
@@ -47,9 +54,14 @@ void Player::flap()
 Rectangle Player::getCollisionRect() const
 {
 	return Rectangle{
-		position.x - BirdRadius,
-		position.y - BirdRadius,
-		BirdRadius * 2.0f,
-		BirdRadius * 2.0f,
+		position.x - (texture.width / 2),
+		position.y - (texture.height / 2),
+		static_cast<float>(texture.width),
+		static_cast<float>(texture.height),
 	};
+}
+
+Player::~Player()
+{
+	UnloadTexture(texture);
 }

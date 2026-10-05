@@ -1,10 +1,11 @@
 #include "Pipe.h"
 #include <iostream>
 
-Pipe::Pipe()
+Pipe::Pipe(Texture2D* texture)
 	: position{0.0f, 0.0f},
 	  gapPosition{0.0f},
-	  passed{false}
+	  passed{false},
+	  texture{texture}
 {
 }
 
@@ -18,19 +19,23 @@ void Pipe::draw() const
 {
 	float screenHeight = GetScreenHeight();
 
-	DrawRectangle(
-		static_cast<int>(position.x),
-		static_cast<int>(position.y - screenHeight + gapPosition),
-		Width,
-		screenHeight,
-		GREEN);
+	// Upper pipe:
+	DrawTexturePro(
+		*texture,
+		Rectangle{0, 0, static_cast<float>(texture->width), -static_cast<float>(texture->height)},
+		Rectangle{position.x, position.y - screenHeight + gapPosition, Width, screenHeight},
+		Vector2{0, 0},
+		0.0f,
+		WHITE);
 
-	DrawRectangle(
-		static_cast<int>(position.x),
-		static_cast<int>(position.y + gapPosition + Gap),
-		Width,
-		screenHeight,
-		GREEN);
+	// Lower pipe:
+	DrawTexturePro(
+		*texture,
+		Rectangle{0, 0, static_cast<float>(texture->width), static_cast<float>(texture->height)},
+		Rectangle{position.x, position.y + gapPosition + Gap, Width, static_cast<float>(texture->height)},
+		Vector2{0, 0},
+		0.0f,
+		WHITE);
 }
 
 void Pipe::update(float deltaTime)

@@ -36,6 +36,8 @@ private:
 	float pipeSpawner;
 	float playerPosX;
 
+	Texture2D pipeTexture;
+
 	static constexpr int width = 800;
 	static constexpr int height = 600;
 	static constexpr int fontSize = 30;

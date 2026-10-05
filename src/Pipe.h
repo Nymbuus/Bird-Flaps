@@ -5,7 +5,7 @@
 class Pipe
 {
 public:
-	Pipe();
+	Pipe(Texture2D* texture);
 
 	void init(int windowWidth, int windowHeight);
 	void draw() const;
@@ -22,6 +22,8 @@ private:
 	Vector2 position;
 	float gapPosition;
 	bool passed;
+
+	Texture2D* texture;
 
 	static constexpr float Gap = 200.0f;
 	static constexpr int gapBorderOffset = 50;

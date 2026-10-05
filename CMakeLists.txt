@@ -30,5 +30,11 @@ FetchContent_MakeAvailable(raylib)
 add_executable(Bird-Flaps
     "src/main.cpp" "src/Game.cpp" "src/Game.h" "src/Player.cpp" "src/Pipe.cpp" "src/Score.cpp" "src/Score.h")
 
+add_custom_command(TARGET Bird-Flaps POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${CMAKE_SOURCE_DIR}/assets"
+        "$<TARGET_FILE_DIR:Bird-Flaps>/assets"
+)
+
 # Link Raylib to our program
 target_link_libraries(Bird-Flaps PRIVATE raylib)
