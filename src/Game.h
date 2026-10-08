@@ -19,8 +19,8 @@ public:
 	void run();
 
 private:
-	void processInput();
-	void update();
+	void processInput(float deltaTime);
+	void update(float deltaTime);
 	void render();
 
 	void updatePlayer(float deltaTime);

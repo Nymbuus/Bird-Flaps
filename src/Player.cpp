@@ -4,7 +4,8 @@
 Player::Player()
 	: position{InitPos},
 	  velocityY{InitVelY},
-	  texture{ }
+	  texture{ },
+	  rotation{InitRot}
 {
 }
 
@@ -33,22 +34,36 @@ void Player::update(float deltaTime, float windowHeight)
 
 void Player::draw() const
 {
-	DrawTexture(
+	DrawTexturePro(
 		texture,
-		static_cast<int>(position.x - (texture.width / 2)),
-		static_cast<int>(position.y - (texture.height / 2)),
-		WHITE);
+		Rectangle(0, 0, texture.width, texture.height),
+		Rectangle(position.x, position.y,  texture.width, texture.height),
+		Vector2(texture.width / 2, texture.height / 2),
+		rotation,
+		WHITE
+	);
 }
 
 void Player::reset()
 {
 	position = InitPos;
 	velocityY = InitVelY;
+	rotation = InitRot;
 }
 
 void Player::flap()
 {
 	velocityY = FlapStrength;
+}
+
+void Player::rotateClockwise(float deltaTime)
+{
+	rotation += RotationSpeed * deltaTime;
+}
+
+void Player::rotateAntiClockwise(float deltaTime)
+{
+	rotation -= RotationSpeed * deltaTime;
 }
 
 Rectangle Player::getCollisionRect() const

@@ -21,15 +21,17 @@ void Game::run()
 {
 	while (!WindowShouldClose())
 	{
-		processInput();
-		update();
+		float deltaTime = GetFrameTime();
+
+		processInput(deltaTime);
+		update(deltaTime);
 		render();
 	}
 
 	CloseWindow();
 }
 
-void Game::processInput()
+void Game::processInput(float deltaTime)
 {
 	if (gameState == GameState::GameOver)
 		if (IsKeyPressed(KEY_SPACE))
@@ -46,6 +48,15 @@ void Game::processInput()
 			gameState = GameState::Playing;
 		}
 
+	if (IsKeyDown(KEY_A))
+	{
+		player.rotateAntiClockwise(deltaTime);
+	}
+	else if (IsKeyDown(KEY_D))
+	{
+		player.rotateClockwise(deltaTime);
+	}
+
 	if (gameState != GameState::Playing)
 		return;
 
@@ -53,12 +64,10 @@ void Game::processInput()
 		player.flap();
 }
 
-void Game::update()
+void Game::update(float deltaTime)
 {
 	if (gameState != GameState::Playing)
 		return;
-
-	float deltaTime = GetFrameTime();
 
 	updatePlayer(deltaTime);
 	updatePipes(deltaTime);
